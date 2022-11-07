@@ -3,6 +3,8 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { ConfigModule } from '@nestjs/config';
 import { DatabaseModule } from './database/database.module';
+import { CarsController } from './modules/cars/cars.controller';
+import { CarsService } from './modules/cars/cars.service';
 
 @Module({
   imports: [
@@ -12,7 +14,7 @@ import { DatabaseModule } from './database/database.module';
     }),
     DatabaseModule,
   ],
-  controllers: [AppController],
-  providers: [AppService],
+  controllers: [AppController, CarsController],
+  providers: [AppService, CarsService],
 })
 export class AppModule {}
