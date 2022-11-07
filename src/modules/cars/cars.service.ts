@@ -4,14 +4,17 @@ import { DatabaseService } from 'src/database/database.service';
 @Injectable()
 export class CarsService {
   async checkAvailability(id: number): Promise<boolean> {
-    if (typeof id !== 'number' || id > 5 || id < 0) {
-      throw new BadRequestException('Invalid ID parameter.');
-    }
     const req = new DatabaseService();
+    const idExists = await req.executeQuery(
+      `SELECT * FROM cars WHERE id = ${id}`,
+    );
+    if (!idExists.length) {
+      throw new BadRequestException('ID does not exist.');
+    }
     const res = await req.executeQuery(
-      `SELECT * FROM rents WHERE car_id = ${id} AND EXISTS (SELECT * FROM cars WHERE cars.id = rents.car_id)`,
+      `SELECT * FROM rents WHERE car_id = ${id}`,
     );
 
-    return Boolean(res.length);
+    return !Boolean(res.length);
   }
 }
