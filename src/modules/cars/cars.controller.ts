@@ -5,8 +5,12 @@ import { CarsService } from './cars.service';
 export class CarsController {
   constructor(private carsService: CarsService) {}
 
-  @Get('/car/:id/free')
-  checkAvailability(@Param('id', ParseIntPipe) id: number): Promise<boolean> {
-    return this.carsService.checkAvailability(id);
+  @Get('/car/:id/:start/:end/free')
+  checkAvailability(
+    @Param('id', ParseIntPipe) id: number,
+    @Param('start') start: string,
+    @Param('end') end: string,
+  ): Promise<boolean> {
+    return this.carsService.checkAvailability(id, start, end);
   }
 }
