@@ -1,5 +1,6 @@
 import { Controller, Param, Get, ParseIntPipe } from '@nestjs/common';
 import { CarsService } from './cars.service';
+import { DateDto } from './dto/car-check.dto';
 
 @Controller()
 export class CarsController {
@@ -8,9 +9,8 @@ export class CarsController {
   @Get('/car/:id/:start/:end/free')
   checkAvailability(
     @Param('id', ParseIntPipe) id: number,
-    @Param('start') start: string,
-    @Param('end') end: string,
+    @Param() dateDto: DateDto,
   ): Promise<boolean> {
-    return this.carsService.checkAvailability(id, start, end);
+    return this.carsService.checkAvailability(id, dateDto);
   }
 }

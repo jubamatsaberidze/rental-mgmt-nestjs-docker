@@ -1,27 +1,29 @@
+import * as dayjs from 'dayjs';
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { DatabaseService } from 'src/database/database.service';
-import { checkValidDate } from 'src/helpers/valiDate';
+import { DateDto } from './dto/car-check.dto';
+import { dateDiff } from 'src/helpers/date.helper';
 
 @Injectable()
 export class CarsService {
-  async checkAvailability(
-    id: number,
-    start: string,
-    end: string,
-  ): Promise<boolean> {
-    if (!checkValidDate(start) || !checkValidDate(end) || start > end) {
+  constructor(private databaseService: DatabaseService) {}
+  async checkAvailability(id: number, dateDto: DateDto): Promise<boolean> {
+    const { start, end } = dateDto;
+    if (dateDiff(start, end) > 30) {
+      throw new BadRequestException('Enter valid date range.');
+    }
+    if (!dayjs(start).isValid() || !dayjs(end).isValid()) {
       throw new BadRequestException('Enter valid dates.');
     }
-    const req = new DatabaseService();
-    const idExists = await req.executeQuery(
+    const idExists = await this.databaseService.executeQuery(
       `SELECT * FROM cars WHERE id = ${id}`,
     );
     if (!idExists.length) {
       throw new BadRequestException('ID does not exist.');
     }
-    const res = await req.executeQuery(
+    const res = await this.databaseService.executeQuery(
       `SELECT * FROM rents 
-       WHERE car_id = ${id} AND ('${start}' <= DATE(lastdate) + INTERVAL '3 day') AND ('${end}' >= startdate)
+       WHERE car_id = ${id} AND ('${start}' <= lastdate + INTERVAL '3 day') AND ('${end}' >= startdate - INTERVAL '3 day')
       `,
     );
 
