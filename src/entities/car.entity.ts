@@ -1,13 +1,5 @@
-import { BaseEntity, Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
-
-@Entity()
-export class Car extends BaseEntity {
-  @PrimaryGeneratedColumn()
+export interface Car {
   id: number;
-
-  @Column()
   name: string;
-
-  @Column()
   license_plate: string;
 }
