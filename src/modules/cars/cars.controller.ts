@@ -10,7 +10,7 @@ export class CarsController {
   checkAvailability(
     @Param('id', ParseIntPipe) id: number,
     @Param() dateDto: DateDto,
-  ): Promise<boolean> {
+  ): Promise<string> {
     return this.carsService.checkAvailability(id, dateDto);
   }
 }
