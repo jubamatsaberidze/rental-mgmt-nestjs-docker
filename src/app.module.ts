@@ -5,6 +5,8 @@ import { ConfigModule } from '@nestjs/config';
 import { DatabaseModule } from './database/database.module';
 import { CarsController } from './modules/cars/cars.controller';
 import { CarsService } from './modules/cars/cars.service';
+import { RentsController } from './modules/rents/rents.controller';
+import { RentsService } from './modules/rents/rents.service';
 
 @Module({
   imports: [
@@ -14,7 +16,7 @@ import { CarsService } from './modules/cars/cars.service';
     }),
     DatabaseModule,
   ],
-  controllers: [AppController, CarsController],
-  providers: [AppService, CarsService],
+  controllers: [AppController, CarsController, RentsController],
+  providers: [AppService, CarsService, RentsService],
 })
 export class AppModule {}

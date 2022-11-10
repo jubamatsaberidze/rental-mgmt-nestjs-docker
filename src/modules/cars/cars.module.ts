@@ -6,5 +6,6 @@ import { DatabaseService } from 'src/database/database.service';
 @Module({
   controllers: [CarsController],
   providers: [CarsService, DatabaseService],
+  exports: [CarsService],
 })
 export class CarsModule {}
