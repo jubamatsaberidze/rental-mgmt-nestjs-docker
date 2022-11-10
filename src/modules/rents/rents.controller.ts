@@ -6,7 +6,7 @@ import {
   Body,
   ParseIntPipe,
 } from '@nestjs/common';
-import { Rent } from 'src/entities/rent.entity';
+import { Contract, Rent } from 'src/entities/rent.entity';
 import { RentsService } from './rents.service';
 import { CreateRentDto } from './dto/add-rent.dto';
 
@@ -23,7 +23,7 @@ export class RentsController {
   rentCar(
     @Param('car_id', ParseIntPipe) car_id: number,
     @Body() createRentDto: CreateRentDto,
-  ): Promise<Rent[] | string> {
+  ): Promise<Rent[] | Contract> {
     return this.rentsService.rentCar(car_id, createRentDto);
   }
 }
