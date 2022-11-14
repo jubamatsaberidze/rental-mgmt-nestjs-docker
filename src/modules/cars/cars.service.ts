@@ -4,10 +4,13 @@ import { DatabaseService } from 'src/database/database.service';
 import { DateDto } from './dto/car-check.dto';
 import { dateDiff } from 'src/helpers/date.helper';
 import { checkWeekDay } from 'src/helpers/date.helper';
+import { ReportDto } from './dto/report-cars.dto';
+import { report_query } from 'src/constants/report.query';
 
 @Injectable()
 export class CarsService {
   constructor(private databaseService: DatabaseService) {}
+
   async checkAvailability(id: number, dateDto: DateDto): Promise<string> {
     const { start, end } = dateDto;
     if (dateDiff(start, end) > 30) {
@@ -40,5 +43,14 @@ export class CarsService {
         ? 'ID does not exist.'
         : 'NO';
     }
+  }
+
+  async carsReport(reportDto: ReportDto): Promise<any[] | any> {
+    const { year, month } = reportDto;
+
+    const query = report_query(year, month);
+    const res = await this.databaseService.executeQuery(query);
+
+    return res;
   }
 }
