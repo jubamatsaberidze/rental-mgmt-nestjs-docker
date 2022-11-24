@@ -11,7 +11,7 @@ WORKDIR /app
 COPY package*.json ./
 
 FROM base AS dev
-RUN npm install
+RUN npm ci
 COPY . .
 CMD ["npm", "run", "start:dev"]
 
