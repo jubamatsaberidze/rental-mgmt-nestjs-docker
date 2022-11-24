@@ -30,14 +30,13 @@ export class CarsService {
           WHEN EXISTS (SELECT * FROM cars where cars.id = ${id}) = 'true'
           THEN (SELECT car_id FROM rents WHERE car_id = ${id} AND ('${start}' <= lastdate + INTERVAL '3 day') AND ('${end}' >= startdate - INTERVAL '3 day') LIMIT 1)
           ELSE (0)
-        END) AS answer
+        END) as answer
        FROM rents
        LIMIT 1
       `,
     );
-
     {
-      return res[0].answer === null
+      return !res.length || res[0].answer === null
         ? 'YES'
         : res[0].answer === 0
         ? 'ID does not exist.'

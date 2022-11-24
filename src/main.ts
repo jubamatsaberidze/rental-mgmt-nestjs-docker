@@ -11,6 +11,8 @@ async function bootstrap() {
     new FastifyAdapter(),
   );
   app.enableShutdownHooks();
-  await app.listen(3000);
+  await app.listen(3000, '0.0.0.0', () =>
+    console.log('Application started listening on port: 3000'),
+  );
 }
 bootstrap();
