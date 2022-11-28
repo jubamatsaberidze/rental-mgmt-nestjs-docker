@@ -1,4 +1,4 @@
-# Advanced Car Rental System - with NestJS + Docker
+# Car Rental System - with NestJS + Docker
 
 ### `Stack: NestJS, SQL, Docker`
 ![nestjs](https://user-images.githubusercontent.com/53910160/201094014-86da86a3-4a84-4d43-bd70-d3613ce25ee1.png) &nbsp;
