@@ -1,11 +1,11 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
-import { DatabaseService } from 'src/database/database.service';
-import { Rent } from 'src/entities/rent.entity';
-import { checkWeekDay } from 'src/helpers/date.helper';
-import { calculateRentPrice } from 'src/helpers/price.helper';
+import { DatabaseService } from '../../database/database.service';
+import { Rent } from '../../entities/rent.entity';
+import { checkWeekDay } from '../../helpers/date.helper';
+import { calculateRentPrice } from '../../helpers/price.helper';
 import { CreateRentDto } from './dto/add-rent.dto';
 import { CarsService } from '../cars/cars.service';
-import { Contract } from 'src/entities/rent.entity';
+import { Contract } from '../../entities/rent.entity';
 
 @Injectable()
 export class RentsService {
