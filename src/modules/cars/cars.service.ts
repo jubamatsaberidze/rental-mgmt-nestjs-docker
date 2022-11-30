@@ -1,11 +1,11 @@
 import * as dayjs from 'dayjs';
 import { BadRequestException, Injectable } from '@nestjs/common';
-import { DatabaseService } from 'src/database/database.service';
+import { DatabaseService } from '../../database/database.service';
 import { DateDto } from './dto/car-check.dto';
-import { dateDiff } from 'src/helpers/date.helper';
-import { checkWeekDay } from 'src/helpers/date.helper';
+import { dateDiff } from '../../helpers/date.helper';
+import { checkWeekDay } from '../../helpers/date.helper';
 import { ReportDto } from './dto/report-cars.dto';
-import { report_query } from 'src/constants/report.query';
+import { report_query } from '../../constants/report.query';
 
 @Injectable()
 export class CarsService {
