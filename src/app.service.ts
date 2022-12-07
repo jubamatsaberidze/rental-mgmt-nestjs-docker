@@ -10,19 +10,22 @@ export class AppService {
     return res;
   }
 
-  async addCar(createCarDto): Promise<string> {
-    const { name, license_plate } = createCarDto;
-    if (!name || !license_plate) {
+  async addCar(createCarDto): Promise<any> {
+    const parsedArray = JSON.stringify(createCarDto);
+    if (!createCarDto) {
       return 'Invalid values.';
     }
     const res = await this.databaseService.executeQuery(
-      `INSERT INTO cars("name", "license_plate")
-       VALUES('${name}', '${license_plate}');
+      `INSERT INTO cars (name, license_plate)
+        SELECT
+        e ->> 'name',
+        (e ->> 'license_plate')
+        FROM jsonb_array_elements('${parsedArray}') AS t(e)
       `,
     );
 
     return res
       ? 'Successfully added new car.'
-      : 'Something went wrong...\nTry again later';
+      : 'Something went wrong...Try again later';
   }
 }

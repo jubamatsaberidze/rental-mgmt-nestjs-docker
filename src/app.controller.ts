@@ -23,7 +23,7 @@ export class AppController {
   }
 
   @Post('/cars')
-  addCar(@Body() createCarDto: CreateCarDto): Promise<string> {
+  addCar(@Body() createCarDto: CreateCarDto[]): Promise<any> {
     return this.appService.addCar(createCarDto);
   }
 
@@ -32,8 +32,9 @@ export class AppController {
     const channel = context.getChannelRef();
     const originalMessage = context.getMessage();
 
-    logger.verbose('data => ', data);
+    logger.verbose(`[X] Received data. Size: ${data.length}`);
     await this.addCar(data);
+
     channel.ack(originalMessage);
   }
 }
