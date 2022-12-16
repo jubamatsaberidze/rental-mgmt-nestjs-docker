@@ -5,8 +5,10 @@ import { DatabaseService } from './database/database.service';
 export class AppService {
   constructor(private readonly databaseService: DatabaseService) {}
 
-  async getCars(): Promise<any> {
-    const res = this.databaseService.executeQuery(`SELECT * FROM cars`);
+  async getCars(offset: number): Promise<any> {
+    const res = await this.databaseService.executeQuery(
+      `SELECT * FROM cars ORDER BY id LIMIT 200 OFFSET ${offset}`,
+    );
     return res;
   }
 
