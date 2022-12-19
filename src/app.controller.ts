@@ -18,8 +18,8 @@ const logger = new Logger('FileUploadApplication');
 export class AppController {
   constructor(private readonly appService: AppService) {}
   @Get('/cars')
-  getCars(): Promise<any> {
-    return this.appService.getCars();
+  getCars(offset: number): Promise<any> {
+    return this.appService.getCars(offset);
   }
 
   @Post('/cars')
@@ -34,7 +34,15 @@ export class AppController {
 
     logger.verbose(`[X] Received data. Size: ${data.length}`);
     await this.addCar(data);
-
     channel.ack(originalMessage);
+  }
+
+  @MessagePattern('load_cars')
+  public async export(@Payload() data, @Ctx() context: RmqContext) {
+    const channel = context.getChannelRef();
+    const originalMessage = context.getMessage();
+    channel.ack(originalMessage);
+
+    return await this.appService.getCars(data);
   }
 }
